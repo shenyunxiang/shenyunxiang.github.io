@@ -75,7 +75,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Objectice-C," />
 
 
 
@@ -91,16 +91,25 @@
 
 
 
-<meta name="description" content="Swift与OC中拷贝与可变性总结">
+<meta name="description" content="OC与Swift中拷贝与可变性总结Objective-C
+容器对象的拷贝
+在OC中，所有的Foundation中的容器类(NSArray，NSMutableArray等)分为不可变和可变容器，它们都是浅拷贝。
+我们可以把容器类想象成一个三成的数据结构，第一层为容器自己的指针，第二层为存在容器里的指针，第三层(如果第二层是指针)就是第二层指针指向的对象。那么在容器被复制的时候，复制的是前两层，第三层">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OC和Swift 浅拷贝，深拷贝">
+<meta property="og:title" content="OC和Swift 拷贝">
 <meta property="og:url" content="http://yoursite.com/2017/03/11/first/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Swift与OC中拷贝与可变性总结">
-<meta property="og:updated_time" content="2017-03-11T11:14:58.000Z">
+<meta property="og:description" content="OC与Swift中拷贝与可变性总结Objective-C
+容器对象的拷贝
+在OC中，所有的Foundation中的容器类(NSArray，NSMutableArray等)分为不可变和可变容器，它们都是浅拷贝。
+我们可以把容器类想象成一个三成的数据结构，第一层为容器自己的指针，第二层为存在容器里的指针，第三层(如果第二层是指针)就是第二层指针指向的对象。那么在容器被复制的时候，复制的是前两层，第三层">
+<meta property="og:updated_time" content="2017-03-11T13:54:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="OC和Swift 浅拷贝，深拷贝">
-<meta name="twitter:description" content="Swift与OC中拷贝与可变性总结">
+<meta name="twitter:title" content="OC和Swift 拷贝">
+<meta name="twitter:description" content="OC与Swift中拷贝与可变性总结Objective-C
+容器对象的拷贝
+在OC中，所有的Foundation中的容器类(NSArray，NSMutableArray等)分为不可变和可变容器，它们都是浅拷贝。
+我们可以把容器类想象成一个三成的数据结构，第一层为容器自己的指针，第二层为存在容器里的指针，第三层(如果第二层是指针)就是第二层指针指向的对象。那么在容器被复制的时候，复制的是前两层，第三层">
 
 
 
@@ -134,7 +143,7 @@
 
 
 
-  <title> OC和Swift 浅拷贝，深拷贝 | Hexo </title>
+  <title> OC和Swift 拷贝 | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -314,7 +323,7 @@
             
             
               
-                OC和Swift 浅拷贝，深拷贝
+                OC和Swift 拷贝
               
             
           </h1>
@@ -365,8 +374,15 @@
       
 
       
-        <p><strong>Swift与OC中拷贝与可变性总结</strong></p>
-
+        <h1 id="OC与Swift中拷贝与可变性总结"><a href="#OC与Swift中拷贝与可变性总结" class="headerlink" title="OC与Swift中拷贝与可变性总结"></a>OC与Swift中拷贝与可变性总结</h1><h2 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective-C"></a>Objective-C</h2><ol>
+<li><p>容器对象的拷贝</p>
+<p>在OC中，所有的<code>Foundation</code>中的容器类(<code>NSArray</code>，<code>NSMutableArray</code>等)分为<strong>不可变</strong>和<strong>可变</strong>容器，它们<strong>都是浅拷贝</strong>。</p>
+<p>我们可以把容器类想象成一个三成的数据结构，第一层为容器自己的指针，第二层为存在容器里的指针，第三层(如果第二层是指针)就是第二层指针指向的对象。那么在容器被复制的时候，复制的是前两层，第三层的对象不会被复制，所以无论是<code>copy</code>还是<code>mutablecopy</code>都是浅拷贝(这是我自己的理解)。这就是容器类拷贝的原理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">@interface Person : NSObject</div><div class="line">@property(nonatomic, copy) NSString     *name;</div><div class="line">@end</div><div class="line">  </div><div class="line">    Person *p = [[Person alloc] init];</div><div class="line">    p.name = @&quot;name&quot;;</div><div class="line">    </div><div class="line">    NSArray *arr1 = @[p];</div><div class="line">    NSArray *arr2 = [arr1 copy];</div><div class="line">    NSMutableArray *mArr3 = [arr1 mutableCopy];</div><div class="line">    NSMutableArray *mArr4 = [mArr3 mutableCopy];</div><div class="line">    //修改对象 p 的属性name 的值</div><div class="line">    [arr1[0] setValue:@&quot;change name&quot; forKey:@&quot;name&quot;]; </div><div class="line"> //打印的数据</div><div class="line"> arr1 = 0x60800000fb30 </div><div class="line"> arr2 = 0x60800000fb30 </div><div class="line"> mArr3 = 0x60800004b760 </div><div class="line"> mArr4 = 0x608000051190</div><div class="line"> arr5 = 0x61000000cb20</div><div class="line"> arr1 = (</div><div class="line">    &quot;&lt;Person: 0x60800000a3a0&gt;&quot;</div><div class="line">) </div><div class="line"> arr2 = (</div><div class="line">    &quot;&lt;Person: 0x60800000a3a0&gt;&quot;</div><div class="line">) </div><div class="line"> mArr3 = (</div><div class="line">    &quot;&lt;Person: 0x60800000a3a0&gt;&quot;</div><div class="line">) </div><div class="line"> mArr4 = (</div><div class="line">    &quot;&lt;Person: 0x60800000a3a0&gt;&quot;</div><div class="line">) </div><div class="line"> arr5 = (</div><div class="line">    &quot;&lt;Person: 0x60800000a3a0&gt;&quot;</div><div class="line">)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>​       从上面我们可以看到调用一个对象的浅拷贝方法会得到一个新的对象(地址不同)，但是会有一个特例:<code>arr1</code>和<code>arr2</code>的地址是一样的，这是因为<code>arr1</code>和<code>arr2</code>都是不可修改的，那么两者共用同一块内存也是无所谓的，所以OC做了这样的优化。然而数组中的<code>Person</code>对象的地址都是一样的，这是因为其拷贝的原理只是对里面的对象进行了<code>retain</code>，没有创建新的对象。</p>
+<h2 id="Swift"><a href="#Swift" class="headerlink" title="Swift"></a>Swift</h2>
       
     </div>
 
@@ -386,6 +402,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objectice-C/" rel="tag"># Objectice-C</a>
+          
+        </div>
       
 
       
@@ -451,8 +473,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/icon.jpg"
@@ -475,6 +506,15 @@
 
           
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
           
 
         </nav>
@@ -507,6 +547,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OC与Swift中拷贝与可变性总结"><span class="nav-number">1.</span> <span class="nav-text">OC与Swift中拷贝与可变性总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C"><span class="nav-number">1.1.</span> <span class="nav-text">Objective-C</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift"><span class="nav-number">1.2.</span> <span class="nav-text">Swift</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
